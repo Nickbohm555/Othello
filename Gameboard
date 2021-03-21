@@ -1,0 +1,71 @@
+package Hw2;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+
+public class Gameboard extends JComponent {
+
+	Square[][] squares;
+	int x,y;
+	int w= 100;
+	int h= 100;
+	Circle[][] circle;
+	
+	
+	Gameboard() {
+		
+		
+		
+		squares = new Square[ 8 ][ 8 ];
+		
+		this.circle = new  Circle[8][8];
+		
+		// this initializes the middle 4 circles to begin the game
+		
+		this.circle[3][3]= new Circle(300, 300,100,100, Color.black);
+		this.circle[3][4]= new Circle(300, 400,100,100, Color.white);
+		this.circle[4][4]= new Circle(400, 400,100,100, Color.black);
+		this.circle[4][3]= new Circle(400, 300,100,100, Color.white);
+		
+		
+		// create all  square values here given the x,y,w,h
+		
+		for(int i=0;  i<8; i++) {
+			for(int j=0;  j<8; j++) {
+				squares[i][j]=  new Square(i* w, j * h, w, h);
+				
+	}
+	}
+	}
+	public void paint(Graphics g) {
+		
+		Graphics2D g2= (Graphics2D) g; 
+				
+		g2.setColor(Color.green);
+		
+		g2.drawRect(400, 500, 100, 100);
+		g2.fillRect(400, 500, 100, 100);
+		
+		for(int i=0;  i<8; i++) {
+			for(int j=0;  j<8; j++) {
+				squares[i][j].draw(g2);
+				
+			// draw	all squares and all circles using draw method from each class
+				
+				if(circle[i][j] != null) {
+					circle[i][j].draw(g2);
+				}				
+				}			
+
+		}
+		}		
+		
+	}
+	
+	
