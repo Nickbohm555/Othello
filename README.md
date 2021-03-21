@@ -1,7 +1,7 @@
 # Othello
 
 IN this project, I created an Othello or 'reversi' game where the game starts off with 4 pieces on the board; 2 are white and 2 are black. 
-Whoever is black goes first and chooses a location on the baord where it has a white piece in between two black black pieces. All white pieces.     
+Whoever is black goes first and chooses a location on the baord where it has a white piece in between two black black pieces. All white pieces    
 in between are then flipped to black pieces and it changes to the white user's turn.
 
 The main data structure I used to code this game is a double array which stored all my data quite neatly.
