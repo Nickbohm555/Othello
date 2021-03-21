@@ -1,0 +1,95 @@
+package Hw2;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+public class MyOthello {
+	
+	
+	public static void main(String[] args) {
+		
+		
+		// Set up my JFrame and JButton here:
+		
+		JFrame frame = new JFrame("My Othello");
+		frame.setSize(800,800);
+		
+		final JButton button = new JButton("Click HERE IF GAME OVER!");	
+		button.setHorizontalAlignment(JLabel.CENTER);
+		frame.add(button, BorderLayout.NORTH);
+		
+		
+		
+		// initialize gameBoard and mouse Listener and link the two
+		
+		final Gameboard board  = new Gameboard();
+		 final ComputerPlayer cp = new ComputerPlayer(board);
+		 final GameMouseListener listener = new GameMouseListener(board, cp);	
+		
+		board.addMouseListener(listener);
+		
+		
+		
+		// every time the button  is pressed, it changes the color and sends message of who's turn
+		
+		button.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) { 
+			  // listener.counter  ++;
+			   int black=0;
+			   int white=0;
+			   
+
+					for(int i=0;  i<8; i++) {
+						for(int j=0;  j<8; j++) {
+
+							if(board.circle[i][j]!= null) {
+							Color color = null;
+							if(board.circle[i][j].color==color.black) {
+								black++;
+							}
+							else {
+								white++;
+							}
+
+						}
+						}
+
+					if(white>black) {
+						JOptionPane.showMessageDialog(null, "You WIN!!!"); 
+					}
+					else if(white==black) {
+						JOptionPane.showMessageDialog(null, "You TIED!!!"); 
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "You LOSE!!!"); 
+					}
+				}
+			  }
+
+				/*^^^^^^^^^^^^^^
+				 * THIS IS 'IN THEORY' SUPPOSE TO CALCULATE  WINNER OF GAME. SOMETIMES IT WORKS AND SOMETIMES 
+				 * IT DOES NOT.
+				 */
+			} );
+		
+		// add board class with paint component to frame and send message of who's turn
+		frame.add(board);
+		
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		 JOptionPane.showMessageDialog(null, "DIRECTIONS: PAY ATTENTION. IT WILL START WITH YOUR TURN (WHITE). FOR THE COMPUTER PLAYER, CLICK ANYWHERE ON THE SCREEN TO ACTIVATE THEIR MOVE! ALSO, DO THE FIRST MOVE IN THE HIGHLIGHTED AREA OR ELSE  CP HAS TROUBLE.");
+		
+	}
+
+	
+	
+}
