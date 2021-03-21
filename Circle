@@ -1,0 +1,33 @@
+package Hw2;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+public class Circle {
+
+int x, y, w,h;
+Color color;
+
+	
+	public Circle(int x, int y, int w, int h, Color color ) {
+		this.x=x;
+		this.y=y;
+		this.w=w;
+		this.h=h;
+		this.color= color;
+	}
+	
+
+
+	public void draw(Graphics2D g2) {
+		// TODO Auto-generated method stub
+		g2.setColor(this.color);
+		g2.drawOval(x, y, w, h);
+		g2.fillOval(x, y, w, h);
+	}
+
+
+
+	
+}
