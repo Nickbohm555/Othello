@@ -1,0 +1,648 @@
+package Hw2;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+import javax.swing.JOptionPane;
+
+public class ComputerPlayer {
+
+	Gameboard board;
+	
+
+	public ComputerPlayer(Gameboard board) {
+
+		this.board  = board;
+
+
+
+	}
+
+
+	public void makeComputerCircle() {
+
+
+
+		// Color is ALWAYS black for the computer player
+		boolean l_1_key= true;
+		boolean l_2_key= true;
+		boolean l_3_key= true;
+		boolean l_4_key= true;
+		boolean l_5_key= true;
+		boolean l_6_key= true;
+		boolean l_7_key= true;
+		boolean l_8_key= true;
+
+		int l_1=0;
+		int l_1_works= 0;
+		int l_2=0;
+		int l_2_works= 0;
+		int l_3=0;
+		int l_3_works=0;;
+		int l_4=0;
+		int l_4_works= 0;
+		int l_5=0;
+		int l_5_works= 0;
+		int l_6=0;
+		int l_6_works= 0;
+		int l_7=0;
+		int l_7_works= 0;
+		int l_8=0;
+		int l_8_works= 0;
+
+		/*FIRST GO THRU EACH POSSIBLE OPEN SPOT ON BOARD AND FIND 'OPTIMAL' MOVE
+		 * FIRST ~200 LINES OF  CODE ARE FINDING WHICH MOVE  (DIAGONAL, LEFT, RIGHT,ECT; WILL TAKE MOST PIECES
+		 * WE RECORD WHICH TAKES MOST PIECES TRHU VARIABLES L_1_WORKS, ECT; AND COMPARE THEM LATER ON
+		 * 
+		 * I USED LOTS OF TRY CATCH BLOCKS TO CATCH EXCEPTIONS WHEN CERTAIN BOARD PEICES DO NOT HAVE COLORS YET
+		 * 
+		 */
+		 
+		for(int i=0;  i<8; i++) {
+			for(int j=0;  j<8; j++) {
+
+
+
+				if(board.circle[i][j] == null) {
+
+
+					try {
+// THIS MOVE CHECKS PIECES TO THE RIGHT OF OPEN SPOT
+						if(board.circle[i+1][j].color == Color.white  ) {
+							// System.out.println("testing!2");	
+							while(board.circle[i+1+l_1][j].color == Color.white  ) {
+								System.out.println("testing!2 "+ l_1);	
+								System.out.println("i: "+ i + "j: "+ j);	
+
+
+								l_1++;
+
+
+							}
+
+							if(board.circle[i+1+l_1][j].color == Color.black  ) {
+								System.out.println("testing!3 ");	
+
+								l_1_works=l_1;
+								// THIS COUNTS TOTAL PIECES FLIPPED FOR MOVES TO RIGHT
+							}			
+						}
+
+
+
+
+					}
+					catch(Exception e) {
+
+
+						// if that does not work, it tries the next option which is diff color BELOW
+
+						try {
+							if(board.circle[i][j+1].color == Color.white  ) {
+
+
+
+								while(board.circle[i][j+1+l_2].color == Color.white  ) {
+
+									if(board.circle[i][j+2+l_2].color == Color.black  ) {
+
+
+										l_2_works=l_2+1;
+
+
+									}	
+
+
+									l_2++;
+
+
+								}
+
+
+
+
+
+							}
+						}
+
+
+
+
+						catch(Exception e2) {
+
+							// if that does not work, it tries the next option which is diff color ABOVE	 
+
+							try {
+								if(board.circle[i][j-1].color == Color.white  ) {
+
+
+									while(board.circle[i][j-1-l_3].color == Color.white  ) {
+
+										if(board.circle[i][j-2-l_3].color == Color.black ) {
+
+											l_3_works = l_3+1;
+										}
+
+
+										l_3++;
+									}
+
+
+
+								} 
+							}
+
+
+
+
+							catch(Exception e3) {
+
+								// if that does not work, it tries the next option which is diff color to LEFT
+
+								try {
+									if(board.circle[i-1][j].color == Color.white  ) {
+
+
+
+										while(board.circle[i-1-l_4][j].color == Color.white  ) {
+
+											l_4++;
+										}
+
+										if(board.circle[i-1-l_4][j].color == Color.black  ) {
+
+											l_4_works=l_4;
+										}
+
+
+									}
+								}
+
+
+
+
+								catch(Exception e4) {
+
+									// if that does not work, it tries the next option which is diff color diagonal top right
+
+									try {
+										if(board.circle[i-1][j-1].color == Color.white  ) {
+
+
+
+											while(board.circle[i-1-l_5][j-1-l_5].color == Color.white  ) {
+
+												l_5++;
+											}
+
+											if(board.circle[i-1-l_5][j-1-l_5].color == Color.black  ) {
+
+												l_5_works=l_5;
+											}
+
+
+
+										}
+									}
+
+									catch(Exception e5) {
+
+										// if that does not work, it tries the next option which is diff color diagonal bottom right
+
+										try {
+											if(board.circle[i+1][j+1].color == Color.white  ) {
+
+
+												while(board.circle[i+1+l_6][j+1+l_6].color == Color.white  ) {
+
+													l_6++;
+												}
+
+												if(board.circle[i+1+l_6][j+1+l_6].color == Color.black  ) {
+
+													l_6_works=l_6;
+												}
+
+
+
+											}
+										}
+
+										catch(Exception e6) {
+
+											// if that does not work, it tries the next option which is diff color diagonal top right
+
+
+											try {
+												if(board.circle[i+1][j-1].color == Color.white  ) {
+
+
+
+													while(board.circle[i+1+l_7][j-1-l_7].color == Color.white  ) {
+
+														l_7++;
+													}
+
+													if(board.circle[i+1+l_7][j-1-l_7].color == Color.black  ) {
+
+														l_7_works=l_7;
+													}
+
+
+												}
+											}												 												 
+											catch(Exception e7) {	
+
+												// if that does not work, it tries the next option which is diff color diagonal bottom left
+
+												try {
+													if(board.circle[i-1][j+1].color == Color.white  ) {
+
+
+														while(board.circle[i-1-l_8][j+1+l_8].color == Color.white  ) {																	
+															l_8++;
+														}	
+
+														if(board.circle[i-1-l_8][j+1+l_8].color == Color.black  ) {																	
+															l_8_works=l_8;
+														}	
+
+
+													}													 
+												}
+
+												catch(Exception e8) {
+
+
+
+												}
+											}
+										}								 
+									}
+								}			 
+							}		 
+						}							
+					}
+				}	
+			}
+
+
+
+
+
+
+		}							 
+
+		int[] biggest_move = {l_1_works, l_2_works, l_3_works, l_4_works, l_5_works, l_6_works, l_7_works, l_8_works};
+		int biggest= l_1_works;
+
+		for(int i: biggest_move) {
+
+			if(i> biggest) {
+				biggest = i;
+			}				
+		}
+
+		System.out.println("biggest  is: " + biggest);
+
+
+		// NOW THAT WE COLLECTED WHICH IS 'OPTIMAL' MOVE  ABOVE ^ IN VARIABLE  'BIGGEST' NOW WE DRAW
+		//THE CIRCLE IN THAT OPTIMAL MOVE
+		//----------------------------------------------------------------------------------------------------------------------------------------------------------
+		//------------------------------------------------------------------------------------------------------------------------
+		//------------------------------------------------------------------------------------------------------------------------
+		//------------------------------------------------------------------------------------------------------------------------
+		//------------------------------------------------------------------------------------------------------------------------
+		//------------------------------------------------------------------------------------------------------------------------
+
+
+
+		if(biggest == l_1_works) {
+			// CASE 1  DRAWS IF OPTIMAL MOVE IS CIRCLES TO RIGHT OF SPOT
+			System.out.println("is this working? case1");
+
+			for(int i=0;  i<7; i++) {
+				for(int j=0;  j<8; j++) {
+					if( l_1_key ) {
+						try {
+							if(board.circle[i][j] == null) {
+								if(board.circle[i+1][j].color  == Color.white ) {
+
+
+
+									if(board.circle[i+1+l_1_works][j].color  == Color.black  ) {
+
+										// create circle once passes test
+										board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, Color.black );										
+
+
+										for(int m=0; m<l_1_works;  m++ ) {									
+											// change color for all in between																	
+											board.circle[i+1+m][j].color = Color.black;
+											l_1_key= false;
+
+										}
+
+
+									}
+
+
+
+								}	
+							}
+
+
+						}
+						catch(Exception e) {
+
+						}
+					}
+				}
+
+			}}
+
+
+		else if(biggest == l_2_works) {
+
+
+			// CASE 2  DRAWS IF OPTIMAL MOVE IS CIRCLES BELOW SPOT
+			System.out.println("is this working? case2");
+
+			for(int i=0;  i<8; i++) {
+				for(int j=0;  j<6; j++) {
+
+					if( l_2_key ) {
+						if(board.circle[i][j] == null) {
+							try {
+
+								if(board.circle[i][j+1].color == Color.white  ) {
+
+
+
+
+									if(board.circle[i][j+1+l_2_works].color  == Color.black  ) {
+
+										// create circle once passes test
+										board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, Color.black );										
+
+
+										for(int m=0; m<l_2_works;  m++ ) {									
+											// change color for all in between																	
+											board.circle[i][j+1+m].color = Color.black;
+											l_2_key= false;
+										}	
+
+
+									}
+								}
+							}
+							catch(Exception e) {
+								System.out.println();
+							}
+						} 
+					}
+				}
+			}
+		}
+
+
+
+
+		else if(biggest == l_3_works) {
+			
+			// CASE 3  DRAWS IF OPTIMAL MOVE IS CIRCLES TO ABOVE SPOT
+			System.out.println("is this working? case3");
+
+			for(int i=0;  i<8; i++) {
+				for(int j=2;  j<8; j++) {
+					if(l_3_key) {
+
+						if(board.circle[i][j] == null) {
+							try {
+
+								if(board.circle[i][j-1].color == Color.white  ) {
+
+
+									if(board.circle[i][j-1-l_3_works].color  == Color.black ) {
+
+										board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, Color.black);
+
+
+
+
+										for(int m=0; m<l_3_works;  m++ ) {
+
+
+											board.circle[i][j-1-m].color = Color.black;
+											l_3_key= false;
+
+
+										}}}	
+							}
+							catch(Exception e) {
+								//	System.out.println(l_3);
+							}
+						}
+					}
+				}		
+			}
+		}
+
+		else if(biggest == l_4) {
+
+			// CASE 4  DRAWS IF OPTIMAL MOVE IS CIRCLES TO LEFT OF SPOT
+			System.out.println("is this working? case4");
+
+			for(int i=2;  i<8; i++) {
+				for(int j=0;  j<8; j++) {
+
+					if(l_4_key) {
+
+						if(board.circle[i][j] == null) {
+							try {
+								if(board.circle[i-1][j].color == Color.white  ) {
+
+
+									if(board.circle[i-1-l_4_works][j].color  == Color.black ) {
+
+										board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, Color.black);
+
+										for(int m=0; m<l_4_works;  m++ ) {
+
+
+											board.circle[i-1-m][j].color = Color.black;
+											l_4_key=false;
+
+										}
+
+									}
+								}
+							}
+							catch(Exception e) {
+
+							}
+
+
+						}
+					}
+				}
+			}
+		}
+
+
+		else if(biggest == l_5_works) {
+			// CASE 5  DRAWS IF OPTIMAL MOVE IS CIRCLES DIAGONAL OF SPOT
+
+			for(int i=2;  i<8; i++) {
+				for(int j=2;  j<8; j++) {
+
+					if(l_5_key) {
+
+						if(board.circle[i][j] == null) {
+							try {
+								if(board.circle[i-1][j-1].color == Color.white  ) {
+
+
+									if(board.circle[i-1-l_5_works][j-1-l_5_works].color  == Color.black ) {
+
+										board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, Color.black);
+
+										for(int m=0; m < l_5_works;  m++ ) {
+
+											board.circle[i-1-m][j-1-m].color = Color.black;
+											l_5_key= false;
+										}
+
+
+									}
+								}
+
+
+							}
+							catch(Exception y) {
+
+							}
+						}
+					}
+				}
+
+			}
+
+		}      
+		else if(biggest == l_6_works) {
+
+			// CASE 6  DRAWS IF OPTIMAL MOVE IS CIRCLES DIAGONAL OF SPOT
+			for(int i=0;  i<6; i++) {
+				for(int j=0;  j<6; j++) {
+
+					if(l_6_key) {
+
+						if(board.circle[i][j] == null) {
+							try {
+								if(board.circle[i+1][j+1].color == Color.white  ) {
+
+
+
+									if(board.circle[i+1+l_6_works][j+1+l_6_works].color  == Color.black ) {
+
+										board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, Color.black);
+
+										for(int m=0; m<l_6_works;  m++ ) {
+
+											board.circle[i+1+m][j+1+m].color = Color.black;
+											l_6_key= false;
+
+										}
+
+									}
+								}	
+							}
+							catch(Exception e) {
+
+							}
+
+
+						}
+					}
+				}
+
+			}}
+
+
+		else if(biggest == l_7_works) {
+			// CASE 7  DRAWS IF OPTIMAL MOVE IS CIRCLES DIAGONAL OF SPOT
+			for(int i=0;  i<6; i++) {
+				for(int j=2;  j<8; j++) {
+
+					if(l_7_key) {
+
+						if(board.circle[i][j] == null) {
+							try {	
+								if(board.circle[i+1][j-1].color == Color.white  ) {
+
+
+
+									if(board.circle[i+1+l_7_works][j-1-l_7_works].color  == Color.black ) {
+
+										board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, Color.black);
+
+										for(int m=0; m<l_7_works;  m++ ) {
+
+											board.circle[i+1+m][j-1-m].color = Color.black;
+											l_7_key= false;
+										}
+
+									}
+								}
+							}
+							catch(Exception e) {
+
+							}
+						}
+					}
+
+				}}
+		}
+
+		else if(biggest == l_8_works) {
+			// CASE 8  DRAWS IF OPTIMAL MOVE IS CIRCLES DIAGONAL OF SPOT
+			for(int i=2;  i<8; i++) {
+				for(int j=0;  j<6; j++) {
+
+					if(l_8_key) {
+
+						if(board.circle[i][j] == null) {
+							try {
+								if(board.circle[i-1][j+1].color == Color.white  ) {
+
+
+									if(board.circle[i-1-l_8_works][j+1+l_8_works].color  == Color.black ) {
+
+										board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, Color.black);
+
+
+										for(int m=0; m<l_8_works;  m++ ) {
+
+											board.circle[i-1-m][j+1+m].color = Color.black;
+											l_8_key= false;
+										}
+
+
+									}
+								}
+							}
+							catch(Exception e) {
+
+							}
+						}
+					}
+				}
+
+			}
+		}
+
+
+
+
+	}	
+}
