@@ -12,7 +12,7 @@ For the User, you must choose a specific spot on the board that is a viable move
 
 WHY DID I MAKE THIS?
 ---------------------
-I made this game because I have always enjoyed playing Othello against my grandpa at home. In order for me to practice, I needed to play against a Computer Player, so I coded a CP to play against me.
+I made this game because I have always enjoyed playing Othello against my grandpa at home. In order for me to practice, I needed to play against a Computer Player, so I coded a CP to play against me. It also helped me understand Object Oriented Programming and design better.
 
 HOW DO I USE THIS?
 -------------------
