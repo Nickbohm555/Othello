@@ -12,362 +12,349 @@ public class GameMouseListener implements  MouseListener {
 
 	Gameboard board;
 	int counter=1;
+	int black=0;
+	int white=0;
 	int x,y;
 	Color color;
-	
-	public GameMouseListener(Gameboard board) {
+	ComputerPlayer cp;
+
+	public GameMouseListener(Gameboard board, ComputerPlayer cp) {
 		this.board= board;
-		
+		this.cp=cp;
 	}
-	
+
 	public void mousePressed(MouseEvent e) {
-		
+
 		// Every time i click, this runs again... 
-		
+
 		this.x = e.getX();
 		this.y= e.getY();	
 		board.repaint();
-	
+
+
+
+
 		// the repaint method connects the gameBoard GUI with the mouseListener
-				
+
 		for(int i=0;  i<8; i++) {
 			for(int j=0;  j<8; j++) {
 				if((i*100)< this.x  && ((i+1)*100) > this.x && (j*100)<this.y && ((j+1) *100 > this.y)   ) {
-	
-		// if clicked values 'x' and 'y' fit this parameters, we get values 'i' and 'j' for clicked area			
-					
-					if(board.circle[i][j] == null) {
-						
-				// first we make sure the clicked area is not already covered		
-						
-				int  k=1;
-				String c;
-						
-				// Now we decide whos turn it is by our 'counter' which adds 1 every time a circle is created
-						
-				if( counter % 2 == 0        )  {
-					color = color.black; 
-					
-					c= "black";}
-						
-							
-				else {
-					color = color.white;
-					
-					c= "white";}
 
-				// now that we have the color  of the person going, do try catch for each scenario of moves:
-				
-					try {
-						
-						// this tests for moves where color to the right is diff
-						
-						if(board.circle[i+1][j].color != color  ) {
-													 
-						int l=1;
-										
-						while(board.circle[i+1+l][j].color != color  ) {
-											
-							l++;
-					}
-																
-						 if(board.circle[i+1+l][j].color  == color ) {
-								 
-						// it passes the test, create  new circle
-						board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
+					// if clicked values 'x' and 'y' fit this parameters, we get values 'i' and 'j' for clicked area			
+
+
+
+
+					if(board.circle[i][j] == null) {
+
+						// first we make sure the clicked area is not already covered		
+
+						int  k=1;
+						String c;
+
+						// Now we decide whos turn it is by our 'counter' which adds 1 every time a circle is created
+
+						if( counter % 2 == 0        )  {
+							color = color.black; 
+
+							// HAVE THIS BE COMPUTER player, CLICKING ANYWHERE ON SCREEN ACTIVATES THIS...
+
+							cp.makeComputerCircle();
 							counter++;
-										
-						for(int m=0; m<l;  m++ ) {
-							board.circle[i+1+m][j].color = color;
-							// change color of all circles in between
-											
+
+
 						}
-									
-						// ALERT messages of next turn
-								
-						if(color==color.black) {
-							 JOptionPane.showMessageDialog(null, "NOW IT IS WHITE'S TURN");
-						}
+
+
 						else {
-								 JOptionPane.showMessageDialog(null, "NOW IT IS BLACK'S TURN");
-								}					
-						}
-						}
-										 		
-						}
-											
-					catch(Exception e1) {
-							
-						// if that does not work, it tries the next option which is diff color BELOW
-							
-						 try {
-						 if(board.circle[i][j+1].color != color  ) {
-							
-														
-							int l=1;
-							while(board.circle[i][j+1+l].color != color  ) {
-									
-							l++;
-						}							
-						 if(board.circle[i][j+1+l].color  == color ) {
-									
-							 // create circle once passes test
-							board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
-							counter++;
-																	
-							for(int m=0; m<l;  m++ ) {									
-								// change color for all in between																	
-								board.circle[i][j+1+m].color = color;
-								}									
-								if(color==color.black) {
-									 JOptionPane.showMessageDialog(null, "NOW IT IS WHITE'S TURN");
-								}
-								else {
-									 JOptionPane.showMessageDialog(null, "NOW IT IS BLACK'S TURN");
-								}
-									
-							}
-						 }
-						 }
-						 
-						 catch(Exception e2) {
-								
-							// if that does not work, it tries the next option which is diff color ABOVE	 
-							 
-						 try {
-						  if(board.circle[i][j-1].color != color  ) {
-																	
-							int l=1;
-							while(board.circle[i][j-1-l].color != color  ) {
-											
-								l++;
-							}
-									
-							 if(board.circle[i][j-1-l].color  == color ) {
-								
-								board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
-								counter++;
-										
-							for(int m=0; m<l;  m++ ) {
-								
-											
-								board.circle[i][j-1-m].color = color;
-							}
-										
-							if(color==color.black) {
-								 JOptionPane.showMessageDialog(null, "NOW IT IS WHITE'S TURN");
-							}
-											else {
-												 JOptionPane.showMessageDialog(null, "NOW IT IS BLACK'S TURN");
-							}
-											
-						}
-						} 
-				 }
-								 
-				 catch(Exception e3) {
-					 
-					// if that does not work, it tries the next option which is diff color to LEFT
-									 
-					 try {
-					  if(board.circle[i-1][j].color != color  ) {
-							
-												
-						int l=1;
-							while(board.circle[i-1-l][j].color != color  ) {
-												
-								l++;
-							}
-											
-											
-						 if(board.circle[i-1-l][j].color  == color ) {
-								
-								board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
-								counter++;
-													
-								for(int m=0; m<l;  m++ ) {
-									
-								
-									board.circle[i-1-m][j].color = color;
+							color = color.white;
+
+
+
+							try {
+
+								// this tests for moves where color to the right is diff
+
+								if(board.circle[i+1][j].color != color  ) {
+
+									int l=1;
+
+									while(board.circle[i+1+l][j].color != color  ) {
+
+										l++;
+									}
+
+									if(board.circle[i+1+l][j].color  == color ) {
+
+										// it passes the test, create  new circle
+										board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
+										counter++;
+
+										for(int m=0; m<l;  m++ ) {
+											board.circle[i+1+m][j].color = color;
+											// change color of all circles in between
+
 										}
-													
-								if(color==color.black) {
-									 JOptionPane.showMessageDialog(null, "NOW IT IS WHITE'S TURN");
-								}
-								else {
-									 JOptionPane.showMessageDialog(null, "NOW IT IS BLACK'S TURN");
+
+										// ALERT messages of next turn
+
+
 									}
-													
 								}
-									}
-									 }
-									 
-					 catch(Exception e4) {
-						 
-						// if that does not work, it tries the next option which is diff color diagonal top right
-										
-						 try {
-						 if(board.circle[i-1][j-1].color != color  ) {
-								
-													
-								int l=1;
-								while(board.circle[i-1-l][j-1-l].color != color  ) {
-													
-									l++;
-								}
-												
-												
-						 if(board.circle[i-1-l][j-1-l].color  == color ) {
-								
-							board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
-							counter++;													
-						for(int m=0; m<l;  m++ ) {
-														
-						board.circle[i-1-m][j-1-m].color = color;
-									}													
-						if(color==color.black) {
-								JOptionPane.showMessageDialog(null, "NOW IT IS WHITE'S TURN");
-								}
-						else {
-							 JOptionPane.showMessageDialog(null, "NOW IT IS BLACK'S TURN");
-						}
-			
-						}
-						}
-						 }
-										 
-						 catch(Exception e5) {
-							 
-							// if that does not work, it tries the next option which is diff color diagonal bottom right
-									 
-					 try {
-							if(board.circle[i+1][j+1].color != color  ) {
-														
-								int l=1;
-							while(board.circle[i+1+l][j+1+l].color != color  ) {
-															
-							l++;
+
 							}
-														
-														
-							 if(board.circle[i+1+l][j+1+l].color  == color ) {
-								
-									board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
-									counter++;
-																
-				for(int m=0; m<l;  m++ ) {
-																																																						
-						board.circle[i+1+m][j+1+m].color = color;
-					}
-																
-					if(color==color.black) {
-						 JOptionPane.showMessageDialog(null, "NOW IT IS WHITE'S TURN");
-					}
-						else {
-							 JOptionPane.showMessageDialog(null, "NOW IT IS BLACK'S TURN");
-					}
-																
-					}
-					}
-							 }
-											 
-							 catch(Exception e6) {
-								 
-				// if that does not work, it tries the next option which is diff color diagonal top right
-												 
-												 
-				 try {
-					 if(board.circle[i+1][j-1].color != color  ) {
-					
-																
-							int l=1;
-				while(board.circle[i+1+l][j-1-l].color != color  ) {
-																
-				l++;
+
+							catch(Exception e1) {
+
+								// if that does not work, it tries the next option which is diff color BELOW
+
+								try {
+									if(board.circle[i][j+1].color != color  ) {
+
+
+										int l=1;
+										while(board.circle[i][j+1+l].color != color  ) {
+
+											l++;
+										}							
+										if(board.circle[i][j+1+l].color  == color ) {
+
+											// create circle once passes test
+											board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
+											counter++;
+
+											for(int m=0; m<l;  m++ ) {									
+												// change color for all in between																	
+												board.circle[i][j+1+m].color = color;
+											}									
+
+
+										}
+									}
+								}
+
+								catch(Exception e2) {
+
+									// if that does not work, it tries the next option which is diff color ABOVE	 
+
+									try {
+										if(board.circle[i][j-1].color != color  ) {
+
+											int l=1;
+											while(board.circle[i][j-1-l].color != color  ) {
+
+												l++;
+											}
+
+											if(board.circle[i][j-1-l].color  == color ) {
+
+												board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
+												counter++;
+
+												for(int m=0; m<l;  m++ ) {
+
+
+													board.circle[i][j-1-m].color = color;
+												}
+
+
+
+											}
+										} 
+									}
+
+									catch(Exception e3) {
+
+										// if that does not work, it tries the next option which is diff color to LEFT
+
+										try {
+											if(board.circle[i-1][j].color != color  ) {
+
+
+												int l=1;
+												while(board.circle[i-1-l][j].color != color  ) {
+
+													l++;
+												}
+
+
+												if(board.circle[i-1-l][j].color  == color ) {
+
+													board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
+													counter++;
+
+													for(int m=0; m<l;  m++ ) {
+
+
+														board.circle[i-1-m][j].color = color;
+													}
+
+
+
+												}
+											}
+										}
+
+										catch(Exception e4) {
+
+											// if that does not work, it tries the next option which is diff color diagonal top right
+
+											try {
+												if(board.circle[i-1][j-1].color != color  ) {
+
+
+													int l=1;
+													while(board.circle[i-1-l][j-1-l].color != color  ) {
+
+														l++;
+													}
+
+
+													if(board.circle[i-1-l][j-1-l].color  == color ) {
+
+														board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
+														counter++;													
+														for(int m=0; m<l;  m++ ) {
+
+															board.circle[i-1-m][j-1-m].color = color;
+														}													
+
+
+													}
+												}
+											}
+
+											catch(Exception e5) {
+
+												// if that does not work, it tries the next option which is diff color diagonal bottom right
+
+												try {
+													if(board.circle[i+1][j+1].color != color  ) {
+
+														int l=1;
+														while(board.circle[i+1+l][j+1+l].color != color  ) {
+
+															l++;
+														}
+
+
+														if(board.circle[i+1+l][j+1+l].color  == color ) {
+
+															board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
+															counter++;
+
+															for(int m=0; m<l;  m++ ) {
+
+																board.circle[i+1+m][j+1+m].color = color;
+															}
+
+
+														}
+													}
+												}
+
+												catch(Exception e6) {
+
+													// if that does not work, it tries the next option which is diff color diagonal top right
+
+
+													try {
+														if(board.circle[i+1][j-1].color != color  ) {
+
+
+															int l=1;
+															while(board.circle[i+1+l][j-1-l].color != color  ) {
+
+																l++;
+															}
+
+
+															if(board.circle[i+1+l][j-1-l].color  == color ) {
+
+																board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
+																counter++;
+
+																for(int m=0; m<l;  m++ ) {
+
+																	board.circle[i+1+m][j-1-m].color = color;
+																}																
+
+															}
+														}
+													}												 												 
+													catch(Exception e7) {	
+
+														// if that does not work, it tries the next option which is diff color diagonal bottom left
+
+														try {
+															if(board.circle[i-1][j+1].color != color  ) {
+
+																int l=1;
+																while(board.circle[i-1-l][j+1+l].color != color  ) {																	
+																	l++;
+																}																																
+																if(board.circle[i-1-l][j+1+l].color  == color ) {
+
+																	board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
+																	counter++;																		
+																	for(int m=0; m<l;  m++ ) {
+
+																		board.circle[i-1-m][j+1+m].color = color;
+																	}																	
+
+																}
+															}													 
+														}
+
+														catch(Exception e8) {
+
+														}
+													}
+												}								 
+											}
+										}			 
+									}		 
+								}							
+							}
+
+
+
+
+
+
+
+
+
+						}
+
+						// now that we have the color  of the person going, do try catch for each scenario of moves:
+
+
+					}	
 				}
-															
-															
-			if(board.circle[i+1+l][j-1-l].color  == color ) {
-					
-			board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
-				counter++;																	
-			for(int m=0; m<l;  m++ ) {
-																																																						
-			board.circle[i+1+m][j-1-m].color = color;
-			}																
-			if(color==color.black) {
-				JOptionPane.showMessageDialog(null, "NOW IT IS WHITE'S TURN");
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "NOW IT IS BLACK'S TURN");
-			}																																		
-			}
-			}
-			}												 												 
-			catch(Exception e7) {	
-				
-				// if that does not work, it tries the next option which is diff color diagonal bottom left
-				
-			try {
-					if(board.circle[i-1][j+1].color != color  ) {
-																
-					int l=1;
-			while(board.circle[i-1-l][j+1+l].color != color  ) {																	
-			l++;
-				}																																
-			if(board.circle[i-1-l][j+1+l].color  == color ) {
-				
-				board.circle[i][j]= new Circle(i* 100, j * 100, 100, 100, color);
-				counter++;																		
-			for(int m=0; m<l;  m++ ) {
-																																							
-			board.circle[i-1-m][j+1+m].color = color;
-			}																	
-			if(color==color.black) {
-				JOptionPane.showMessageDialog(null, "NOW IT IS WHITE'S TURN");
-					}
-			else {
-					JOptionPane.showMessageDialog(null, "NOW IT IS BLACK'S TURN");
-			}																		
-			}
-			}													 
-			}
-													 
-			catch(Exception e8) {
-				
-			}
-			}
-			}								 
-			}
-			}			 
-			}		 
-			}							
-			}
-			}	
-			}
 			}								
-			}
-			}
+		}
+	}
 
 	public void mouseClicked(MouseEvent e) {
-		
-		
+
+
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
-	}
-	
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
-	
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+
 }
